@@ -50,16 +50,28 @@ xtabs(~ Treatment + Improved, data = Arthritis) %>%
 
 - How many patients were enrolled in the clinical trial?
 
+84 patients were enrolled in the clinical trial.
+
 - What is the probability a randomly selected patient received the placebo?
+
+43/84 or about 52%.
 
 - What is the probability a randomly selected patient received the placebo
   and had a marked improvement?
   
+The probability of a randomly selected patient receiving the placebo and 
+having a marked improvement is 7/84.
+  
 - What is the probability a randomly selected patient received the placebo
   and the treatment?
   
+0% probability because this is a disjoint probability.
+  
 - What is the probability a randomly selected patient had some improvement or
   was on the treatment?
+  
+48/84 is the probability of a randomly selected patient having some improvement 
+or being on the treatment.
 
 ## Using computer simulations to calculate probabilities
 
@@ -92,7 +104,7 @@ of eight marbles each time. This way we can easily simulate our marble-drawing
 experiment.
 
 ```{r simulate_draws}
-draw_results <- sample(marbles, size = 10000, replace = TRUE)
+draw_results <- sample(marbles, size = 1000, replace = TRUE)
 ```
 
 ```{r summarize_draws}
@@ -158,11 +170,16 @@ Perform a simulation to compute this empirical probability.
 Write down your guess to the answer before you calculate it.
 
 ```{r simulate_rolls}
-
+roll_results <- tibble(
+  die_1 = replicate(n = 10000, expr = sample(1:6, size = 1)),
+  die_2 = replicate(n = 10000, expr = sample(1:6, size = 1))
+)
 ```
 
 ```{r identify_events}
-
+roll_results <- two_draw_results %>% 
+  mutate(event1 = die_1^2 == die_2, event2 = abs(die_1-die_2) == 4)
+roll_results
 ```
 
 ```{r summarize_rolls}
